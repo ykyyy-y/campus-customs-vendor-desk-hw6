@@ -1,0 +1,18 @@
+# Campus Customs vendor desk agent - HW 6
+# python -m venv .venv && .venv/Scripts/pip install -r requirements.txt
+
+# The agent framework and the OpenAI-compatible client it talks to Portkey through.
+pydantic-ai-slim[openai]>=2.57
+openai>=1.40
+portkey-ai>=1.9
+
+# PORTKEY_API_KEY comes from .env (never committed - see .gitignore).
+python-dotenv>=1.0
+
+# Reading vendor documents: HTML, PDF. (.eml uses the standard library.)
+beautifulsoup4>=4.12
+lxml>=5.0
+pypdf>=4.2
+
+# Counting handbook tokens locally, for Problem 2.
+tiktoken>=0.7
