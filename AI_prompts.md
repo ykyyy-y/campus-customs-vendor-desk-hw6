@@ -959,3 +959,71 @@ chart library and a web font, so the two interesting design decisions were alrea
 by the instruction.
 
 ---
+
+## Problem 10 — Push to GitHub and submit the URL
+
+### Prompt I typed
+
+> Now going to Problem 10: push to GitHub and submit the URL. Push my project to a
+> **public** GitHub repository and submit the repo URL on Canvas. Graders will clone it,
+> so make sure the repository is accessible and all the required files are present.
+> Include the **entire `data/` folder** — the course data plus my two attack files — so
+> graders can clone the repo and run my agent right away. **Do not commit my actual
+> `.env`**: use `.gitignore` to keep it out, and provide a `.env.example` with only
+> placeholders. Make sure the files match the expected repository layout (here is the
+> tree). Including other Python files is perfectly fine. And add a short note in
+> `README.md` explaining how to execute the agent.
+
+### The repository
+
+**https://github.com/ykyyy-y/campus-customs-vendor-desk-hw6** — public, 67 files, one
+commit.
+
+`README.md` was written for this problem: what the agent is, the three commands to get it
+running (venv → `.env` → `python agent.py --doc …`), the defence-mode flags, a table of
+every reproduction script and what it writes, how the project is put together, and the
+headline results.
+
+### What was checked before and after pushing
+
+Pushing a repository is not something you can take back, so the checks came first.
+
+1. **No secret, by two independent tests.** `.env` is in `.gitignore`; `git ls-files`
+   matches nothing for `.env`, `.venv`, `__pycache__`, `*.pyc`, or `data.zip`; and I
+   searched the staged content for the literal key value and found nothing.
+2. **The expected layout.** Every file in the assignment's tree is present, plus the extra
+   Python and `output/` files the problem allows. `data/` is complete: 12 practice
+   documents, 10 exam documents, and my 2 attack files.
+3. **A clean clone was tested end to end.** I cloned the public URL into a fresh
+   directory, built a venv from `requirements.txt` alone, added a key, and ran the exact
+   command the README gives — it returned the correct assessment for `p01` at a cost of
+   $0.000372. Then I deleted the clone, along with the key copy inside it.
+
+### What went wrong on the way, and how it was fixed
+
+1. **Git refused to touch the folder.** `fatal: detected dubious ownership` — the
+   directory is owned by a different Windows account than the one running git. Added the
+   path to `safe.directory`, the fix git itself prints.
+2. **The PDFs would have been corrupted in the clone.** `git add` warned *"LF will be
+   replaced by CRLF"* on every `.pdf` and `.eml` in `data/` — autocrlf had misdetected
+   binaries as text, and a grader cloning the repo would have received PDFs that no longer
+   parse, including both of my attack files. Added a `.gitattributes` with `* -text` so
+   every file is stored and checked out byte-for-byte, re-staged everything, and verified
+   after committing that `git show HEAD:<file> | wc -c` matches the file on disk exactly
+   for the PDFs (1,855 and 2,033 bytes). This is the failure that would have cost the most
+   points and it produced only a warning, not an error.
+
+### Follow-up prompt (if needed) and what was lacking after the first prompt
+
+**Follow-up prompt:** No follow-up prompt was needed.
+
+**What was lacking after the first prompt:** Nothing was lacking, because the first prompt
+gave the repository tree, the visibility requirement, the one thing that must never be
+committed and the placeholder file that replaces it, the requirement that the whole
+`data/` folder ship so a clone runs immediately, and the README note — which is also what
+told me the right final check was to clone the public URL and run the agent from it rather
+than to trust my own working copy.
+
+---
+
+*End of log. Ten problems, one agent, zero trap tool calls.*
