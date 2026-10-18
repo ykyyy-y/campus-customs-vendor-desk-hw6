@@ -120,8 +120,8 @@ supporting files.
 | Handbook | 10,058 tokens, sent on every call |
 | Caching | 86.1% cheaper — $12.53 vs $90.05 per month at 1,000 documents a day |
 | Practice set, undefended | 8 / 12 decisions correct |
-| Practice set, defended | **12 / 12** decisions correct, clean documents still 5 / 5 |
-| Cost of the defences | +$0.000025 per document (+7%), about $0.75 a month |
+| Practice set, defended | **12 / 12** — every field and every decision; clean documents still 5 / 5 |
+| Cost of the defences | +$0.000026 per document (+7.1%), about $0.77 a month |
 | Exam set | 10 / 10 unanimous over three trials, 0 trap calls |
 | Trap tool calls, all problems | **0** |
 

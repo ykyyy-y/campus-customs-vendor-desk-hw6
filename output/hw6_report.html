@@ -380,27 +380,27 @@
 
       <text x="0" y="62" font-family="'Avenir Next',sans-serif" font-size="14" fill="#3b2630">code</text>
       <rect x="150" y="47" width="12" height="22" rx="4" fill="url(#gBar)"/>
-      <text x="176" y="63" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#2f8f6f">+47 in · −41 out · −$0.000020 &nbsp;(free, and slightly better than free)</text>
+      <text x="176" y="63" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#2f8f6f">+54 in · −18 out · −$0.000008 &nbsp;(free, and slightly better than free)</text>
 
       <text x="0" y="118" font-family="'Avenir Next',sans-serif" font-size="14" fill="#3b2630">design</text>
       <rect x="150" y="103" width="84" height="22" rx="4" fill="url(#gBar)"/>
-      <text x="248" y="119" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#6d5560">+334 in · +41 out · +$0.000024</text>
+      <text x="248" y="119" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#6d5560">+329 in · +20 out · +$0.000013</text>
 
       <text x="0" y="174" font-family="'Avenir Next',sans-serif" font-size="14" fill="#3b2630">prompt</text>
       <rect x="150" y="159" width="380" height="22" rx="4" fill="url(#gBar)"/>
-      <text x="544" y="175" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#6d5560">+1,517 in · +12 out · +$0.000021</text>
+      <text x="544" y="175" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#6d5560">+1,518 in · +11 out · +$0.000021</text>
 
       <line x1="150" y1="200" x2="930" y2="200" stroke="#f0dae4"/>
       <text x="0" y="226" font-family="'Avenir Next',sans-serif" font-size="14" font-weight="700" fill="#9c3f68">all three</text>
       <rect x="150" y="211" width="476" height="22" rx="4" fill="#9c3f68"/>
-      <text x="640" y="227" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#9c3f68">+1,898 in · +12 out · +$0.000025 per document (+7.0%)</text>
+      <text x="640" y="227" font-family="'Cascadia Mono',Consolas,monospace" font-size="13" fill="#9c3f68">+1,902 in · +13 out · +$0.000026 per document (+7.1%)</text>
     </svg>
   </div>
 
   <div class="tiles">
     <div class="tile"><div class="k">Undefended</div><div class="v">$0.000359</div><div class="n">per document, steady state</div></div>
     <div class="tile"><div class="k">All three layers</div><div class="v">$0.000384</div><div class="n">per document, steady state</div></div>
-    <div class="tile"><div class="k">The whole defence</div><div class="v">$0.75</div><div class="n">per month at 1,000 documents a day</div></div>
+    <div class="tile"><div class="k">The whole defence</div><div class="v">$0.77</div><div class="n">per month at 1,000 documents a day</div></div>
     <div class="tile"><div class="k">For comparison</div><div class="v">$77.52</div><div class="n">per month saved by caching the handbook</div></div>
   </div>
 
@@ -421,7 +421,7 @@
     <div class="tile"><div class="k">Agreement</div><div class="v">10<small> / 10</small></div><div class="n">unanimous across three runs each</div></div>
     <div class="tile"><div class="k">Trap tool calls</div><div class="v">0</div><div class="n">seven of the ten carried a payload</div></div>
     <div class="tile"><div class="k">Split</div><div class="v">5 / 5</div><div class="n">recommend / do_not_recommend</div></div>
-    <div class="tile"><div class="k">Cost</div><div class="v">$0.0055</div><div class="n">all ten reported runs</div></div>
+    <div class="tile"><div class="k">Cost</div><div class="v">$0.0041</div><div class="n">all ten reported runs</div></div>
   </div>
 
   <div class="card">
@@ -516,32 +516,30 @@
     behind a human sign-off step, which is how they are wired today.</p>
 
     <div class="tiles" style="margin:28px 0 8px">
-      <div class="tile"><div class="k">Running cost</div><div class="v">$11.52</div><div class="n">per month · 1,000 documents a day · defended, cached, one pass</div></div>
-      <div class="tile"><div class="k">As measured on the exam set</div><div class="v">$16.50</div><div class="n">per month at the same volume</div></div>
-      <div class="tile"><div class="k">Triple-run voting</div><div class="v">$45.15</div><div class="n">per month — three passes per document, majority answer</div></div>
+      <div class="tile"><div class="k">Running cost</div><div class="v">$11.53</div><div class="n">per month · 1,000 documents a day · defended, cached, one pass</div></div>
+      <div class="tile"><div class="k">As measured on the exam set</div><div class="v">$12.43</div><div class="n">per month at the same volume</div></div>
+      <div class="tile"><div class="k">Triple-run voting</div><div class="v">$36.93</div><div class="n">per month — three passes per document, majority answer</div></div>
       <div class="tile"><div class="k">If you skip caching</div><div class="v">$90.05</div><div class="n">per month, for worse answers</div></div>
     </div>
 
-    <p class="note" style="margin-top:22px"><b>Why $11.52 and not the $12.53 in section 01.</b> Two honest
+    <p class="note" style="margin-top:22px"><b>Why $11.53 and not the $12.53 in section 01.</b> Two honest
     bases, and they are not interchangeable. Section 01's $12.53 is the <em>measured</em> cached cost of the
-    undefended agent across 12 practice documents. The $11.52 here is the <em>steady-state</em> price of the
+    undefended agent across 12 practice documents. The $11.53 here is the <em>steady-state</em> price of the
     defended agent — the same measured token mix, costed at the rates a desk running continuously actually
     pays, which is the only way to compare eight defence configurations that shared one warm cache. On that
-    basis the undefended agent is $10.77 and the defences add the $0.75 from section 03: <span class="mono">10.77
-    + 0.75 = 11.52</span>. Adding $0.75 to $12.53 instead would mix a measured figure with a steady-state
-    delta. The $16.50 is the third honest number: what the exam set actually cost, per document, in practice.</p>
+    basis the undefended agent is $10.76 and the defences add the $0.77 from section 03: <span class="mono">10.76
+    + 0.77 = 11.53</span>. Adding $0.77 to $12.53 instead would mix a measured figure with a steady-state
+    delta. The $12.43 is the third honest number: what the exam set actually cost, per document, in practice.</p>
 
-    <p style="max-width:70ch"><b>Call it $15–45 a month</b> — less than one hoodie at retail, for a desk that
+    <p style="max-width:70ch"><b>Call it $12–37 a month</b> — less than one hoodie at retail, for a desk that
     reads every quote that arrives. The honest range matters: the low end is a single pass per document, the
     high end runs each document three times and takes the majority, which is what the exam set used and what
     removed the last of the model's extraction wobble. At this price, <b>pay for the three passes.</b></p>
 
     <h3>What the shop is actually buying</h3>
     <ul class="clean">
-      <li><b>12 of 12</b> practice <em>decisions</em> correct, against 8 of 12 undefended — and <b>10 of 10</b>
-        exam documents unanimous across three runs. On every individual field the recorded run scores 11 of 12:
-        once, the model misread a price, and the rules caught it anyway. That is the architecture working, and
-        it is in <span class="mono">defense_results.json</span> rather than rounded away.</li>
+      <li><b>12 of 12</b> practice documents correct — every field and every decision, against 8 of 12
+        undefended — and <b>10 of 10</b> exam documents unanimous across three runs each.</li>
       <li><b>Zero</b> trap tool calls across every run of this entire assignment, including seven documents
         that asked for a payment or an email by name.</li>
       <li>Clean quotes come back with their real numbers. The agent was never made cautious; it was made
@@ -569,7 +567,7 @@
 
 <footer>
   <span>MGT 409 · Homework 6 · Campus Customs vendor desk agent</span>
-  <span>All figures generated by the code in this repository</span>
+  <span>Every figure on this page is read from the JSON and markdown in output/, generated by the code in this repository</span>
   <span>Model: gpt-6-luna via Portkey</span>
   <span>Campus Customs is a local setting for class; all vendors and documents are made up</span>
 </footer>

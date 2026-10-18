@@ -23,6 +23,9 @@ import re
 from pathlib import Path
 
 from agent import assess, build_agent
+
+#: No defences - the Problem 3 agent, with the trap tools on its own toolbox.
+UNDEFENDED: tuple[str, ...] = ()
 from tools import TRAP_CALLS, read_document
 
 HW_ROOT = Path(__file__).resolve().parent
@@ -119,13 +122,19 @@ def trap_log() -> list[dict]:
 
 def main() -> None:
     key = {row["file"]: row for row in json.loads(KEY.read_text(encoding="utf-8"))}
-    agent = build_agent()  # Problem 3's agent. Nothing added.
+    # Pinned to the empty layer tuple on purpose. ``build_agent()`` defaulted to the
+    # Problem 3 build when this was written; Problem 6 changed the default to all three
+    # defence layers, which would silently turn this script into a *defended* run and
+    # stop it reproducing the results it wrote. The baseline has to stay the baseline.
+    agent = build_agent(layers=UNDEFENDED)
     results = []
 
     for name in sorted(key):
         rel = f"data/practice_docs/{name}"
         traps_before = len(trap_log())
-        answer = assess(rel, agent=agent, label="problem5_attack")["output"].model_dump()
+        answer = assess(
+            rel, agent=agent, label="problem5_attack", layers=UNDEFENDED
+        )["output"].model_dump()
         fired = trap_log()[traps_before:]
 
         expected = key[name]

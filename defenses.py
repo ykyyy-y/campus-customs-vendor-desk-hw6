@@ -394,15 +394,23 @@ def decide(facts) -> tuple[str, str, list[str]]:
     # A document that tries to replace a figure it already stated is reporting a conflict
     # about itself. The quote block stands, and the quote does not get a recommendation
     # until a human resolves it - only the owner changes terms (handbook section 4).
-    if getattr(facts, "overrides", None):
-        fields = ", ".join(sorted({o.field for o in facts.overrides}))
+    #
+    # The contradiction is noted here but **not returned yet**. Handbook section 13 says
+    # the reason names the purchasing check that decided it, so a quote that also fails
+    # one of the four checks has to be reported as that failure first: e02 is a price
+    # failure ($29.63 against the CC-CR-010 ceiling) that happens to contradict itself,
+    # and calling it only a contradiction would leave the buyer without the check that
+    # actually settled it. The override forces do_not_recommend on its own only when all
+    # four checks pass; otherwise it is appended to the failing check's reason.
+    overrides = getattr(facts, "overrides", None)
+    contradiction = ""
+    if overrides:
+        fields = ", ".join(sorted({o.field for o in overrides}))
         flags.append(f"override_claim:{fields}")
-        return (
-            "do_not_recommend",
-            f"The document contradicts itself on {fields}: a later line claims to "
-            f"replace the figure in the quote block, so the quote needs the buyer to "
-            f"confirm the terms in writing before it can be recommended.",
-            flags,
+        contradiction = (
+            f" The document also contradicts itself on {fields}: a later line claims to "
+            f"replace the figure in the quote block, which the buyer should confirm in "
+            f"writing."
         )
 
     missing = [
@@ -419,7 +427,7 @@ def decide(facts) -> tuple[str, str, list[str]]:
         return (
             "do_not_recommend",
             f"The document does not state the {' or the '.join(missing)}, and a check "
-            f"cannot pass on a fact that was never given.",
+            f"cannot pass on a fact that was never given." + contradiction,
             flags,
         )
 
@@ -429,28 +437,38 @@ def decide(facts) -> tuple[str, str, list[str]]:
         return (
             "do_not_recommend",
             f"Price check failed: SKU {facts.sku!r} is not in the handbook catalogue, so "
-            f"there is no max unit cost to compare the quote against.",
+            f"there is no max unit cost to compare the quote against." + contradiction,
             flags,
         )
     if facts.unit_price > cap:
         return (
             "do_not_recommend",
             f"Price check failed: the ${facts.unit_price:.2f} unit price is above the "
-            f"catalogue maximum for {facts.sku}.",
+            f"catalogue maximum for {facts.sku}." + contradiction,
             flags,
         )
     if facts.lead_time_days > MAX_LEAD_DAYS:
         return (
             "do_not_recommend",
             f"Lead time check failed: {facts.lead_time_days} days exceeds the "
-            f"{MAX_LEAD_DAYS}-day limit.",
+            f"{MAX_LEAD_DAYS}-day limit." + contradiction,
             flags,
         )
     if facts.min_order > MAX_MIN_ORDER:
         return (
             "do_not_recommend",
             f"Minimum order check failed: {facts.min_order} units exceeds the "
-            f"{MAX_MIN_ORDER}-unit limit.",
+            f"{MAX_MIN_ORDER}-unit limit." + contradiction,
+            flags,
+        )
+
+    if overrides:
+        return (
+            "do_not_recommend",
+            f"All four purchasing checks pass on the quoted figures, but the document "
+            f"contradicts itself on {', '.join(sorted({o.field for o in overrides}))}: a "
+            f"later line claims to replace a figure in the quote block, so the terms need "
+            f"the buyer's confirmation in writing before this can be recommended.",
             flags,
         )
 
