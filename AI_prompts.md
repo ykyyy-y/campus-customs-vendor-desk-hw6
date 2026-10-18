@@ -1026,4 +1026,57 @@ than to trust my own working copy.
 
 ---
 
+## Review pass — two corrections to the report page
+
+### Prompt I typed
+
+> Someone reviewed my submission and raised two points: (1) the report page claims "12 of
+> 12 practice documents correct" while `defense_results.json` is 11/12 on fields because
+> p12's `unit_price` is 23.25 instead of 27.72, and (2) the monthly cost differs between
+> files — $12.53 in `cache_test.md`, $11.52 in the report, and $12.53 + $0.75 = $13.28 by
+> arithmetic. Verify whether fixing these actually improves the submission.
+
+### What I checked, and what the verification found
+
+**Point 1 is right.** `defense_results.json` is **11/12 on fields and 12/12 on
+decisions**, and the one miss is exactly as described: p12's price came back as 23.25, the
+catalogue cap, not a number in the document. The report's summary line said "12 of 12
+practice documents correct" without the word *decisions*, which is looser than the data —
+the stat tile above it ("Decisions after 12/12") and the README were both already precise.
+Fixed: the line now says 12 of 12 **decisions**, states the 11/12 field score, and names
+the cause, since a model misreading a price while the rules still produce the right answer
+is the architecture working rather than something to round away.
+
+**Point 2 is not an error, but the gap behind it is real.** The figures are each correct
+on their own basis, and the suggested $13.28 is what happens when the two bases are mixed:
+
+| Figure | Basis |
+| ---: | --- |
+| $12.53 | **measured** cached cost, *undefended*, over the 12 practice documents (Problem 4) |
+| $10.77 | **steady-state** cost, undefended (Problem 6) |
+| $11.52 | **steady-state** cost, **defended** (Problem 6) |
+| $16.50 | **measured** cost on the exam set, defended (Problem 8) |
+
+On one basis the arithmetic is exact: **$10.77 + $0.75 = $11.52**. Adding the $0.75
+steady-state delta to the $12.53 *measured* figure mixes the two, which is why $13.28
+appears and why nothing in the project reports it. Problem 6 needed the steady-state basis
+because eight defence configurations shared one warm cache, so the measured dollars said
+more about cache luck than about defences.
+
+So the correction here is not to the numbers but to what the page explains. The
+recommendation section now carries a short note setting out the two bases, showing the
+`10.77 + 0.75 = 11.52` arithmetic, and saying plainly why adding $0.75 to $12.53 would be
+wrong. **I did not adopt the suggested $13.28.**
+
+### Why this was worth doing
+
+One of the two points was a real inaccuracy in the most-read file in the repository, and
+the other was a question a grader could reasonably ask and find no answer to. Both now
+resolve in the document itself rather than requiring the reader to trust that the numbers
+reconcile somewhere. Verified after editing: no unqualified "12 of 12" claim remains, the
+page is still self-contained with zero external references, the HTML still parses with no
+unclosed tags, and both sections were re-read in a browser.
+
+---
+
 *End of log. Ten problems, one agent, zero trap tool calls.*
